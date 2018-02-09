@@ -9,13 +9,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#ifdef CONFIG_MACH_XIAOMI_MSM8937
-#ifdef CONFIG_MACH_XIAOMI_LAND
-#include "msmb_isp-land.h"
-#else
-#include "msmb_isp-santoni.h"
-#endif
-#else
 #ifndef __MSMB_ISP__
 #define __MSMB_ISP__
 
@@ -38,4 +31,4 @@ struct msm_isp_event_data32 {
 #endif
 
 #endif
-#endif /* XIAOMI_LAND */
+
