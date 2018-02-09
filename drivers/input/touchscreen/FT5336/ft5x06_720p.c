@@ -1018,13 +1018,24 @@ static int ft5x06_ts_probe(struct i2c_client *client,
 
 	/* check the controller id */
 	reg_addr = FT_REG_ID;
+#ifdef CONFIG_MACH_XIAOMI_SANTONI
+	do {
+		err = ft5x06_i2c_read(client, &reg_addr, 1, &reg_value, 1);
+		if (err < 0)
+			dev_err(&client->dev, "version read failed");
+		if (reg_value != 0x14)
+			client->addr = client->addr + 0x1;
+		else
+			break;
+	} while (reg_value != 0x14);
+#else
 	err = ft5x06_i2c_read(client, &reg_addr, 1, &reg_value, 1);
 	if (err < 0) {
 		dev_err(&client->dev, "version read failed");
 		goto free_reset_gpio;
 	}
+#endif
 	ic_name = reg_value;
-
 	dev_info(&client->dev, "Device ID = 0x%x\n", reg_value);
 
 	if ((pdata->family_id != reg_value) && (!pdata->ignore_id_check)) {
